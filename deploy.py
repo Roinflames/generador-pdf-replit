@@ -31,30 +31,43 @@ class DeploymentManager:
         """
         self._log(f"Running command: {' '.join(command)}")
         try:
-            process = subprocess.Popen(
-                command,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-                cwd=cwd
-            )
+            # For pipenv requirements command with redirect, use shell=True
+            if isinstance(command, list) and len(command) >= 3 and command[0] == "pipenv" and command[1] == "requirements" and ">" in command[2]:
+                cmd_str = " ".join(command)
+                process = subprocess.Popen(
+                    cmd_str,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    shell=True,
+                    text=True,
+                    cwd=cwd
+                )
+            else:
+                process = subprocess.Popen(
+                    command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    cwd=cwd
+                )
             
             # Stream output in real time and capture logs
-            while True:
-                output = process.stdout.readline()
-                error = process.stderr.readline()
-                
-                if output:
-                    self._log(output.strip())
-                if error:
-                    self._log(f"ERROR: {error.strip()}")
+            if process.stdout is not None and process.stderr is not None:
+                while True:
+                    output = process.stdout.readline()
+                    error = process.stderr.readline()
                     
-                # Break if process is done
-                if output == '' and error == '' and process.poll() is not None:
-                    break
+                    if output:
+                        self._log(output.strip())
+                    if error:
+                        self._log(f"ERROR: {error.strip()}")
+                        
+                    # Break if process is done
+                    if output == '' and error == '' and process.poll() is not None:
+                        break
             
             return_code = process.poll()
-            if return_code != 0:
+            if return_code is not None and return_code != 0:
                 raise subprocess.CalledProcessError(return_code, command)
             
             return True
@@ -110,6 +123,13 @@ class DeploymentManager:
                 if 'flask' in f.read().lower():
                     return True
         
+        # Check for Flask in Pipfile
+        pipfile_path = os.path.join(directory, 'Pipfile')
+        if os.path.exists(pipfile_path):
+            with open(pipfile_path, 'r') as f:
+                if 'flask' in f.read().lower():
+                    return True
+        
         return any(indicators)
     
     def _find_app_entrypoint(self, directory):
@@ -141,15 +161,55 @@ class DeploymentManager:
     
     def _install_dependencies(self, directory):
         """
-        Install Python dependencies from requirements.txt
+        Install Python dependencies from requirements.txt or Pipfile
         """
         req_path = os.path.join(directory, 'requirements.txt')
+        pipfile_path = os.path.join(directory, 'Pipfile')
         
-        if os.path.exists(req_path):
+        if os.path.exists(pipfile_path):
+            self._log("Pipfile detected, installing dependencies with pipenv")
+            # Check if pipenv is installed, if not install it
+            try:
+                self._run_command(["pipenv", "--version"], cwd=directory)
+            except:
+                self._log("Installing pipenv")
+                self._run_command([sys.executable, "-m", "pip", "install", "pipenv"], cwd=directory)
+            
+            # Install dependencies using pipenv
+            self._log("Installing dependencies using pipenv")
+            self._run_command(["pipenv", "install"], cwd=directory)
+            
+            # Create a requirements.txt file for Replit compatibility
+            self._log("Creating requirements.txt from Pipfile for Replit compatibility")
+            try:
+                # Run pipenv requirements and save to requirements.txt
+                process = subprocess.Popen(
+                    ["pipenv", "requirements"],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    cwd=directory
+                )
+                stdout, stderr = process.communicate()
+                
+                if process.returncode == 0:
+                    # Write the output to requirements.txt
+                    req_file_path = os.path.join(directory, "requirements.txt")
+                    with open(req_file_path, "w") as f:
+                        f.write(stdout)
+                    self._log("Successfully created requirements.txt from Pipfile")
+                else:
+                    raise subprocess.CalledProcessError(process.returncode, ["pipenv", "requirements"])
+            except:
+                self._log("WARNING: Could not automatically create requirements.txt from Pipfile")
+                # Manually install the common Flask dependencies
+                self._run_command([sys.executable, "-m", "pip", "install", "Flask", "gunicorn"], cwd=directory)
+        
+        elif os.path.exists(req_path):
             self._log("Installing dependencies from requirements.txt")
             self._run_command([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"], cwd=directory)
         else:
-            self._log("No requirements.txt found, installing Flask only")
+            self._log("No requirements.txt or Pipfile found, installing Flask only")
             self._run_command([sys.executable, "-m", "pip", "install", "Flask"], cwd=directory)
     
     def _update_code_for_replit(self, directory, app_file):

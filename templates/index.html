@@ -28,7 +28,8 @@
                         {% endwith %}
 
                         <p class="lead">
-                            Enter the URL of a GitHub repository containing a Flask application to deploy it to Replit.
+                            Enter the URL of a GitHub repository containing a Flask application to deploy it to Replit. 
+                            Applications using pipenv (Pipfile) are supported.
                         </p>
 
                         <form action="{{ url_for('deploy') }}" method="POST" id="deployForm">
@@ -67,7 +68,7 @@
                                     <div class="accordion-body">
                                         <ol class="mb-0">
                                             <li>Clones your GitHub repository</li>
-                                            <li>Installs dependencies from requirements.txt</li>
+                                            <li>Installs dependencies from requirements.txt or Pipfile</li>
                                             <li>Configures the Flask app for Replit</li>
                                             <li>Sets up the application to listen on the correct ports</li>
                                             <li>Starts your Flask application</li>
