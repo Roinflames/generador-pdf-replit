@@ -1,6 +1,14 @@
 from flask import render_template, make_response, redirect, url_for
 from . import escritura_bp
-import pdfkit
+import sys
+
+# Intentar importar pdfkit, pero manejar el caso si no está disponible
+try:
+    import pdfkit
+    PDFKIT_DISPONIBLE = True
+except (ImportError, Exception):
+    print("pdfkit o wkhtmltopdf no está disponible. La funcionalidad de PDF será limitada.", file=sys.stderr)
+    PDFKIT_DISPONIBLE = False
 
 @escritura_bp.route('/escritura_compraventa')
 def escritura_compraventa_view():
@@ -51,11 +59,28 @@ def generar_pdf():
 
     # Renderizar la plantilla para el PDF
     html = render_template('plantilla_compraventa.html', **data)
-    pdf = pdfkit.from_string(html, False)
-
-    # Generar el PDF
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=escritura_compraventa.pdf'
-
-    return response
+    
+    # Verificar si pdfkit está disponible
+    if PDFKIT_DISPONIBLE:
+        try:
+            # Generar PDF con pdfkit
+            pdf = pdfkit.from_string(html, False)
+            
+            # Generar el PDF como respuesta
+            response = make_response(pdf)
+            response.headers['Content-Type'] = 'application/pdf'
+            response.headers['Content-Disposition'] = 'inline; filename=escritura_compraventa.pdf'
+            
+            return response
+            
+        except Exception as e:
+            # Si hay error, registrarlo y mostrar la vista HTML
+            print(f"Error al generar PDF: {e}", file=sys.stderr)
+            return render_template('plantilla_compraventa_preview.html', 
+                                  mensaje_error="No se pudo generar el PDF debido a un error. Se muestra la vista HTML en su lugar.",
+                                  **data)
+    else:
+        # Si pdfkit no está disponible, mostrar la vista HTML con un mensaje
+        return render_template('plantilla_compraventa_preview.html', 
+                              mensaje_error="La generación de PDF no está disponible en este entorno. Se muestra la vista HTML en su lugar.",
+                              **data)
