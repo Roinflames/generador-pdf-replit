@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Previa - Escritura de Compraventa</title>
+    <style>
+        body {
+            font-size: 12pt;
+            font-family: Arial, sans-serif;
+        }
+        h1, h3 {
+            font-size: 14pt;
+            font-weight: bold;
+        }
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vista Previa: Escritura de Compraventa</h1>
+
+    <h1>ESCRITURA DE COMPRAVENTA</h1>
+    <p>En {{ ciudad }}, a {{ dia }} de {{ mes }} de {{ anio }}, ante mí, {{ notario }}, Notario Público de {{ ciudad }}, comparecen:</p>
+    
+    <h3>Vendedor:</h3>
+    <p>Nombre completo: {{ vendedor_nombre }}<br>
+    RUT: {{ vendedor_rut }}<br>
+    Domicilio: {{ vendedor_domicilio }}</p>
+    
+    <h3>Comprador:</h3>
+    <p>Nombre completo: {{ comprador_nombre }}<br>
+    RUT: {{ comprador_rut }}<br>
+    Domicilio: {{ comprador_domicilio }}</p>
+    
+    <h3>OBJETO DEL CONTRATO:</h3>
+    <p>El vendedor transfiere al comprador, quien acepta, el bien inmueble ubicado en {{ inmueble_direccion }}, cuya descripción es la siguiente: {{ inmueble_descripcion }}.</p>
+    
+    <h3>PRECIO DE LA VENTA:</h3>
+    <p>El precio acordado de la compraventa es la suma de {{ precio_venta }} pesos chilenos (${{ precio_venta_numero }}), que el comprador declara haber pagado al vendedor al momento de la firma de esta escritura.</p>
+    
+    <h3>FORMA DE PAGO:</h3>
+    <p>El pago se realiza de la siguiente manera:<br>
+    - {{ metodo_pago }}</p>
+    
+    <h3>ENTREGA DEL BIEN:</h3>
+    <p>El vendedor entrega al comprador el bien en este acto, quien lo recibe en el estado en que se encuentra, renunciando a cualquier reclamación posterior respecto a su condición o vicios.</p>
+    
+    <h3>DECLARACIONES ADICIONALES:</h3>
+    <p>{{ declaraciones_adicionales }}</p>
+    
+    <p>En virtud de lo expuesto, las partes firman esta escritura en dos ejemplares de un mismo tenor, a fin de que surta los efectos legales correspondientes.</p>
+    
+    <h3>FIRMAN:</h3>
+    
+    <p>_______________________________<br>
+    {{ vendedor_nombre }} (Vendedor)</p>
+    
+    <p>_______________________________<br>
+    {{ comprador_nombre }} (Comprador)</p>
+
+
+    <!-- Enlace fuera del contenido del documento para generar el PDF -->
+    <a href="{{ url_for('escritura_compraventa.generar_pdf') }}" target="_blank">Generar PDF</a>
+</body>
+</html>

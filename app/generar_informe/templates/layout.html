@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Informe{% endblock %}</title>
+    <!-- <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        header, footer { text-align: center; color: gray; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    </style> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        h1 {
+            color: #333366;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #cccccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #333366;
+            color: #ffffff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .total {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    {% block header %}
+    <h1>Informe de Contactos</h1>
+    {% endblock %}
+</header>
+
+<main>
+    {% block content %}
+    <!-- Aquí va el contenido -->
+    {% endblock %}
+</main>
+
+<footer>
+    {% block footer %}
+    <p>Generado automáticamente por el sistema</p>
+    {% endblock %}
+</footer>
+
+</body>
+</html>

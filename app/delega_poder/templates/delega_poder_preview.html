@@ -1,0 +1,23 @@
+<!-- delega_poder_preview.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Previa</title>
+</head>
+<body>
+    <h2>Vista Previa de la Delega Poder</h2>
+    <p><strong>Tribunal:</strong> {{ tribunal }}</p>
+    <p><strong>Abogado Patrocinante:</strong> {{ abogado_patrocinante }}</p>
+    <p><strong>Carátula:</strong> {{ caratula }}</p>
+    <p><strong>Rol:</strong> {{ rol }}</p>
+    <p><strong>Demandado:</strong> {{ demandado }}</p>
+    <p><strong>RUT del Demandado:</strong> {{ rut_demandado }}</p>
+
+    <!-- Botón para generar el PDF -->
+    <form action="{{ url_for('delega_poder.generar_pdf') }}" method="get" target="_blank">
+        <button type="submit">Generar PDF</button>
+    </form>
+</body>
+</html>

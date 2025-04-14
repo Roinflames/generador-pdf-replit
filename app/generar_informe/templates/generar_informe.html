@@ -1,0 +1,29 @@
+<!-- Este sería el archivo de cuerpo que diferencia entre los distintos informes -->
+{% extends "layout.html" %}
+
+{% block title %}Contactos{% endblock %}
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Medio</th>
+            <th>Consulta</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contacto in contactos %}
+        <tr>
+            <td>{{ contacto.cliente }}</td>
+            <td>{{ contacto.fecha }}</td>
+            <td>{{ contacto.medio }}</td>
+            <td>{{ contacto.consulta }}</td>
+            <td>{{ contacto.estado }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

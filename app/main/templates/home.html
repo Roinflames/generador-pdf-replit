@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Generador de Documentos</title>
+</head>
+
+<body>
+    {% if current_user.is_authenticated %}
+        <p>Bienvenido, {{ current_user.username }} | 
+        <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></p>
+
+        <p>Selecciona el tipo de documento que deseas generar:</p>
+        
+        <ul>
+            <li><a href="{{ url_for('delega_poder.delega_poder_view') }}"><button>Delegación de Poder</button></a></li>
+            <li><a href="{{ url_for('diagrama.diagrama_view') }}"><button>Diagrama</button></a></li>
+            <li><a href="{{ url_for('escritura_compraventa.escritura_compraventa_view')            }}"><button>Escritura de Compraventa</button></a></li>
+            <li><a href="{{ url_for('generar_informe.generar_informe_view') }}"><button>Generar Informe</button></a></li>
+            <li><a href="{{ url_for('liquidacion_de_persona_natural.liquidacion_view') }}"><button>Liquidación de Persona Natural</button></a></li>
+            <li><a href="{{ url_for('reconocimiento.reconocimiento_preview') }}"><button>Reconocimiento de Firma</button></a></li>
+        </ul>
+        
+        <hr>
+        <p><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></p>
+    {% endif %}
+
+</body>
+
+</html>
+

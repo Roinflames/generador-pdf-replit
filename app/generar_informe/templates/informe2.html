@@ -1,0 +1,23 @@
+<!-- Este sería el archivo de cuerpo que diferencia entre los distintos informes -->
+{% extends "layout.html" %}
+
+{% block title %}Contactos{% endblock %}
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>De</th>
+            <th>para</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contacto in contactos %}
+        <tr>
+            <td>{{ contacto.cliente }}</td>
+            <td>{{ contacto.cliente }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

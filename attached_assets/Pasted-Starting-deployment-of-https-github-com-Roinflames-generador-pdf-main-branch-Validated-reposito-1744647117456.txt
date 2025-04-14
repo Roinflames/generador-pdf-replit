@@ -1,0 +1,41 @@
+Starting deployment of https://github.com/Roinflames/generador-pdf (main branch)
+Validated repository URL: https://github.com/Roinflames/generador-pdf.git
+Created temporary directory: /tmp/tmpmdnsq9rr
+Cloning repository https://github.com/Roinflames/generador-pdf.git, branch main
+Running command: git clone -b main https://github.com/Roinflames/generador-pdf.git /tmp/tmpmdnsq9rr
+ERROR: Cloning into '/tmp/tmpmdnsq9rr'...
+Found Flask application entry point: app/__init__.py
+Pipfile detected, installing dependencies with pipenv
+Running command: pipenv --version
+pipenv, version 2024.4.1
+Installing dependencies using pipenv with Python 3.11.10
+Running command: pipenv --python /nix/store/wqhkxzzlaswkj3gimqign99sshvllcg6-python-wrapped-0.1.0/bin/python3 install
+To activate this project's virtualenv, run pipenv shell.
+ERROR: Creating a virtualenv for this project
+Alternatively, run a command inside the virtualenv with pipenv run.
+ERROR: Pipfile: /tmp/tmpmdnsq9rr/Pipfile
+Installing dependencies from Pipfile.lock (0e6ce4)...
+ERROR: Using
+ERROR: /nix/store/wqhkxzzlaswkj3gimqign99sshvllcg6-python-wrapped-0.1.0/bin/python33.11.
+ERROR: 10 to create virtualenv...
+ERROR: created virtual environment CPython3.11.10.final.0-64 in 408ms
+ERROR: creator
+ERROR: CPython3Posix(dest=/home/runner/workspace/.local/share/virtualenvs/tmpmdnsq9rr-lW
+ERROR: iCjGWg, clear=False, no_vcs_ignore=False, global=False)
+ERROR: seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle,
+ERROR: via=copy, app_data_dir=/home/runner/workspace/.local/share/virtualenv)
+ERROR: added seed packages: pip==25.0.1, setuptools==78.1.0, wheel==0.45.1
+ERROR: activators
+ERROR: BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,
+ERROR: PythonActivator
+ERROR: 
+ERROR: ✔ Successfully created virtual environment!
+ERROR: Virtualenv location: /home/runner/workspace/.local/share/virtualenvs/tmpmdnsq9rr-lWiCjGWg
+ERROR: Warning: Your Pipfile requires python_version 3.10, but you are using 3.11.10 (/home/runner/w/.local/share/v/t/bin/python).
+ERROR: $ pipenv --rm and rebuilding the virtual environment may resolve the issue.
+ERROR: $ pipenv check will surely fail.
+Creating requirements.txt from Pipfile for Replit compatibility
+Successfully created requirements.txt from Pipfile
+Copying deployed files to application directory
+Deployment completed successfully
+Cleaned up temporary directory

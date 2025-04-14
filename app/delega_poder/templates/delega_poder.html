@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Delegación de Poder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin-left: 3cm;
+      margin-right: 3cm;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      line-height: 2.0;
+    }
+    .center {
+      text-align: center;
+    }
+    .bold {
+      font-weight: bold;
+    }
+    .underline {
+      text-decoration: underline;
+    }
+    .section {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bold underline">DELEGACION DE PODER</div>
+
+  <div class="center bold underline section">{{tribunal}}</div>
+
+  <div class="section" style="text-align: justify; text-indent: 2em;">
+    <span class="bold">{{abogado_patrocinante}}</span>&emsp;, abogado, por la parte demandante, en autos caratulados <span class="bold">{{caratula}}</span> causa <span class="bold">{{rol}}</span> seguidos ante este Tribunal, a SS., digo:
+  </div>
+
+  <div class="section" style="text-align: justify; text-indent: 2em;">
+    Que, por este acto, vengo en delegar poder en el Abogado don <span class="bold">{{demandado}}</span>, cédula nacional de Identidad N° {{rut_demandado}}, de mi mismo domicilio, quien podrá actuar de manera conjunta o separada indistintamente en estos autos, para todos los efectos legales.
+  </div>
+
+  <div class="section center bold">Por tanto,</div>
+
+  <div class="section">
+    Ruego a US.: Acceder a lo solicitado.
+  </div>
+
+</body>
+</html>

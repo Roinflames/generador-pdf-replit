@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Flowchart</title>
+</head>
+<body>
+    <img src="{{ firma_url }}" alt="Firma Alfaro Madariaga" width="200">
+    <h1>Business Process</h1>
+    <img src="{{ image_url }}" alt="Business Flowchart" width="600"><br>
+    <p>This document shows the business process flow...</p>
+
+    <form action="{{ url_for('diagrama.generar_pdf_diagrama') }}" method="get" target="_blank">
+        <button type="submit">Generar PDF</button>
+    </form>
+</body>
+</html>
