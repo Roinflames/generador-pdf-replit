@@ -175,9 +175,10 @@ class DeploymentManager:
                 self._log("Installing pipenv")
                 self._run_command([sys.executable, "-m", "pip", "install", "pipenv"], cwd=directory)
             
-            # Install dependencies using pipenv
-            self._log("Installing dependencies using pipenv")
-            self._run_command(["pipenv", "install"], cwd=directory)
+            # Install dependencies using pipenv with the Python version available in Replit
+            self._log("Installing dependencies using pipenv with Python " + sys.version.split()[0])
+            # Specify the current Python interpreter to pipenv
+            self._run_command(["pipenv", "--python", sys.executable, "install"], cwd=directory)
             
             # Create a requirements.txt file for Replit compatibility
             self._log("Creating requirements.txt from Pipfile for Replit compatibility")
@@ -271,9 +272,9 @@ class DeploymentManager:
         """
         Copy deployed files to the current directory
         """
-        # Copy everything except .git
+        # Copy everything except .git and .venv directories
         for item in os.listdir(source_dir):
-            if item == '.git':
+            if item == '.git' or item == '.venv' or item.startswith('.virtualenvs'):
                 continue
                 
             source_item = os.path.join(source_dir, item)
