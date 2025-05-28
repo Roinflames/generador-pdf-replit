@@ -64,31 +64,30 @@ def generar_pdf():
     # Renderizar HTML con datos
     html_renderizado = template.render(fecha=fecha_actual, contactos=contactos)
 
-    # Verifica si pdfkit está disponible
-    if PDFKIT_DISPONIBLE:
-        try:
-            # Opciones para pdfkit
-            options = {
-                'page-size': 'Letter',
-                'encoding': 'UTF-8',
-                'enable-local-file-access': None  # Permite acceder a archivos locales en la plantilla
-            }
-            
-            # GenerarPDF a partir del HTML renderizado
-            pdf = pdfkit.from_string(html_renderizado, False, options=options)
-            
-            # Crear la respuesta PDF
-            response = make_response(pdf)
-            response.headers['Content-Type'] = 'application/pdf'
-            response.headers['Content-Disposition'] = 'inline; filename=informe_contactos.pdf'
-            
-            return response
-        except Exception as e:
-            print(f"Error al generar PDF: {e}", file=sys.stderr)
-            # Si hay un error, muestra la vista en HTML con un mensaje de error
-            return render_template('error.html', mensaje="No se pudo generar el PDF. wkhtmltopdf no está instalado o configurado correctamente.")
-    else:
-        # Si pdfkit no está disponible, mostrar el HTML en su lugar
+    try:
+        # Intentar importar e usar pdfkit si está disponible
+        import pdfkit
+        
+        # Opciones para pdfkit
+        options = {
+            'page-size': 'Letter',
+            'encoding': 'UTF-8',
+            'enable-local-file-access': None  # Permite acceder a archivos locales en la plantilla
+        }
+        
+        # GenerarPDF a partir del HTML renderizado
+        pdf = pdfkit.from_string(html_renderizado, False, options=options)
+        
+        # Crear la respuesta PDF
+        response = make_response(pdf)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = 'inline; filename=informe_contactos.pdf'
+        
+        return response
+    except Exception as e:
+        print(f"Error al generar PDF: {e}", file=sys.stderr)
+        # Si hay un error, mostrar el HTML con un mensaje de error en su lugar
+        # Usamos el mecanismo que ya tenemos en generar_informe_preview.html
         return render_template('generar_informe_preview.html', 
                               contenido=html_renderizado, 
-                              mensaje_error="La generación de PDF no está disponible. Se muestra la vista HTML en su lugar.")
+                              mensaje_error="No se pudo generar el PDF. wkhtmltopdf no está disponible en este entorno. Se muestra la vista HTML en su lugar.")

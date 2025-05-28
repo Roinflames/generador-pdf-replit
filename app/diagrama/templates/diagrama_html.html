@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Flowchart - HTML Version</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .flowchart {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .step {
+            border: 2px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            text-align: center;
+            width: 120px;
+        }
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .step1 { background-color: #d4edda; }
+        .step2 { background-color: #d1ecf1; }
+        .step3 { background-color: #fff3cd; }
+        .step4 { background-color: #ffeeba; }
+        .step5 { background-color: #f8d7da; }
+        .arrow {
+            font-size: 24px;
+            margin: 0 5px;
+            align-self: center;
+        }
+        .note {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #6c757d;
+            margin: 20px 0;
+        }
+        .actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 0 10px;
+        }
+        img {
+            max-width: 200px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="{{ firma_url }}" alt="Firma Alfaro Madariaga">
+            <h1>Business Process Flow</h1>
+        </div>
+        
+        <div class="note">
+            <p><strong>Nota:</strong> Esta es una representación HTML del diagrama de flujo, generada porque Graphviz no está disponible en este entorno.</p>
+        </div>
+        
+        <div class="flowchart">
+            <div class="step step1">
+                <div class="step-title">Paso 1</div>
+                <div class="step-desc">Inicio del proceso</div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <div class="step step2">
+                <div class="step-title">Paso 2</div>
+                <div class="step-desc">Validación inicial</div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <div class="step step3">
+                <div class="step-title">Paso 3</div>
+                <div class="step-desc">Procesamiento de datos</div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <div class="step step4">
+                <div class="step-title">Paso 4</div>
+                <div class="step-desc">Verificación</div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <div class="step step5">
+                <div class="step-title">Paso 5</div>
+                <div class="step-desc">Finalización</div>
+            </div>
+        </div>
+        
+        <p>Este diagrama muestra el flujo básico de negocio, desde el inicio del proceso hasta su finalización. Cada paso representa una etapa crítica en el proceso.</p>
+        
+        <div class="actions">
+            <form action="{{ url_for('diagrama.generar_pdf_diagrama') }}" method="get" target="_blank">
+                <button type="submit" class="btn">Generar documento</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
